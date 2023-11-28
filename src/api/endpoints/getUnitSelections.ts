@@ -1,4 +1,5 @@
 import executeRequest from "../executeRequest";
+import type Host from "../hosts";
 import Endpoint from "./endpoint";
 
 export type Selections = {
@@ -7,7 +8,7 @@ export type Selections = {
     periods: any[],
     groups: any[],
     classes: { groupGuid: string, groupName: string }[],
-    rooms: any[],
+    rooms: { id: null|any, name: string, eid: string, external: boolean, selectableBy: null|any }[], // |null on everythign!??
     teachers: any[],
     students: any[]
 }
@@ -23,7 +24,7 @@ export type Filters = {
     teacher?: boolean
 }
 
-const getUnitSelections = async (hostName: string, unitGuid: string, filters: Filters) =>
+const getUnitSelections = async (hostName: Host, unitGuid: string, filters: Filters) =>
 {
     
     const body = {
@@ -48,6 +49,8 @@ const getUnitSelections = async (hostName: string, unitGuid: string, filters: Fi
         Endpoint.UnitSelections,
         (json: { data: { [K in keyof Selections]: any[] } }) =>
         {
+            // Gör en kommentar här att det blir streamlined här men om man vill kan man bara ta bort mina custom types
+            // och få all data som Skola24 kommer mä
             let data: Selections = {
                 courses: json.data.courses.map((course) => course),
                 subjects: json.data.subjects.map((subject) => subject),

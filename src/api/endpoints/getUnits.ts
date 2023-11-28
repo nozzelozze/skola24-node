@@ -1,11 +1,20 @@
 import executeRequest from "../executeRequest";
+import type Host from "../hosts";
 import Endpoint from "./endpoint";
 
 export type Unit = { unitGuid: string, unitId: string }
 
-const getUnits = (hostName: string) =>
+const getUnits = (hostName: Host) =>
+{
 
-    executeRequest<Unit[]>(
+    const body = {
+        getTimetableViewerUnitsRequest:
+        {
+            hostName: hostName
+        }
+    }
+
+    return executeRequest<Unit[]>(
         Endpoint.Units,
         (json) =>
         {
@@ -16,12 +25,8 @@ const getUnits = (hostName: string) =>
             })
             return units
         },
-        {
-            getTimetableViewerUnitsRequest:
-            {
-                hostName: hostName
-            }
-        }
-        )
+        body
+    )
+}
 
 export default getUnits

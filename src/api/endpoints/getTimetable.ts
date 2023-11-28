@@ -1,53 +1,10 @@
 import executeRequest from "../executeRequest"
+import type { Dimensions, RawTimetable } from "../helperTypes"
+import type Host from "../hosts"
 import Endpoint from "./endpoint"
+import type SelectionType from "./selectionTypes"
 
-export type Timetable = 
-{
-    "textList":         {
-        "x": number,
-        "y": number,
-        "fColor": string,
-        "fontsize": number,
-        "text": string,
-        "bold": boolean,
-        "italic": boolean,
-        "id": number,
-        "parentId": number,
-        "type": string
-    }[],
-    "boxList": {
-        "x": number,
-        "y": number,
-        "width": number,
-        "height": number,
-        "bColor": string,
-        "fColor": string,
-        "id": number,
-        "parentId": number|null,
-        "type": string,
-        "lessonGuids": string[] | null
-    }[],
-    "lineList": {
-            "p1x": number,
-            "p1y": number,
-            "p2x": number,
-            "p2y": number,
-            "color": string,
-            "id": number,
-            "parentId": number,
-            "type": string
-    }[],
-    "lessonInfo": {
-        "guidId": string,
-        "texts": string[],
-        "timeStart": string,
-        "timeEnd": string,
-        "dayOfWeekNumber": number,
-        "blockName": string
-    }[]
-}
-
-const getTimetable = async (hostName: string, renderKey: string, unitGuid: string, selection: string, week: number) =>
+const getTimetable = async (hostName: Host, renderKey: string, schoolYear: string, unitGuid: string, selection: string, week: number, dimensions: Dimensions, selectionType: SelectionType) =>
 {
 
     const body = {
@@ -58,9 +15,9 @@ const getTimetable = async (hostName: string, renderKey: string, unitGuid: strin
         "endDate": null,
         "scheduleDay": 0,
         "blackAndWhite": false,
-        "width": 1117,
-        "height": 1015,
-        "selectionType": 0,
+        "width": dimensions.width,
+        "height": dimensions.height,
+        "selectionType": selectionType,
         "selection": selection,
         "showHeader": false,
         "periodText": "",
@@ -68,13 +25,15 @@ const getTimetable = async (hostName: string, renderKey: string, unitGuid: strin
         "year": 2023,
         "privateFreeTextMode": null,
         "privateSelectionMode": false,
-        "customerKey": ""
+        "customerKey": "",
+        "schoolYear": "9f797060-f067-49ce-91f4-e945692ea8e8"
     }
 
-    return executeRequest<Timetable>(
+    return executeRequest<RawTimetable>(
         Endpoint.Timetable,
         (json) =>
         {
+            console.log(json)
             return json.data
         },
         body

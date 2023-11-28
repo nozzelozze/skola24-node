@@ -1,15 +1,20 @@
+import getActiveYears from "./api/endpoints/getActiveYears";
 import getRenderKey from "./api/endpoints/getRenderKey";
-import getTimetable, { Timetable } from "./api/endpoints/getTimetable";
+import getTimetable from "./api/endpoints/getTimetable";
 import getUnitSelections, { Filters, Selections } from "./api/endpoints/getUnitSelections";
 import type { Unit } from "./api/endpoints/getUnits";
 import getUnits from "./api/endpoints/getUnits";
+import type SelectionType from "./api/endpoints/selectionTypes";
+import type { Dimensions, Timetable } from "./api/helperTypes";
 import type Host from "./api/hosts";
+import transformTimetable from "./api/transformTimetable";
 
 
 class Skola24
 {
-    private currentHost: string;
-    private currentSchoolGuid: string;
+    private currentHost: Host
+    private currentSchoolGuid: string
+    private schoolYear: string | null
 
     /**
      * Skapar en ny instans av Session-klassen och initierar nödvändiga parametrar.
@@ -33,10 +38,17 @@ class Skola24
      * const sessionWithSchool = new Session('skola24host.com', 'someSchoolGuid')
      * ```
      */
-    public constructor(host: Host, schoolGuid?: string)
+    public constructor(host: Host,  schoolGuid?: string)
     {
-        this.currentHost = host;
-        this.currentSchoolGuid = schoolGuid || null;
+        this.currentHost = host
+        this.currentSchoolGuid = schoolGuid || null
+        //this.initialize()
+    }
+
+    private async getSchoolYear()
+    {
+        let result = await getActiveYears(this.currentHost)
+        this.schoolYear = result.data[0].guid
     }
 
     /**
@@ -161,8 +173,10 @@ class Skola24
      * }
      * ```
      */
-    public async getSchedule(selection: string, week: number, schoolGuid?: string): Promise<{ success: boolean, data: Timetable }>
+    public async getSchedule(selection: string, week: number, dimensions: Dimensions, selectionType: SelectionType, schoolGuid?: string): Promise<{ success: boolean, data: Timetable }>
     {
+        if (!this.schoolYear)
+            await this.getSchoolYear()
         const failed = { success: false, data: null }
 
         if (!this.currentSchoolGuid && !schoolGuid) return failed
@@ -173,10 +187,13 @@ class Skola24
 
         const renderKey = renderKeyResult.data
 
-        let result = await getTimetable(this.currentHost, renderKey, schoolGuid ?? this.currentSchoolGuid, selection, week)
+        let result = await getTimetable(this.currentHost, renderKey, this.schoolYear, schoolGuid ?? this.currentSchoolGuid, selection, week, dimensions, selectionType)
         if (!this.checkResult(result)) return failed
 
-        return { success: true, data: result.data }
+        console.log(result)
+        const timetable = transformTimetable(result.data)
+
+        return { success: true, data: timetable }
     }
 
 
