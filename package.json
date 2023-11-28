@@ -1,0 +1,12 @@
+{
+  "name": "skola24-api",
+  "version": "1.0.0",
+  "description": "Npm package designed to simplify the process of fetching schedules from Skola24.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

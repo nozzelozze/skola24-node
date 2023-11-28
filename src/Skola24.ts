@@ -1,12 +1,12 @@
-import getRenderKey from "../endpoints/getRenderKey";
-import getTimetable, { Timetable } from "../endpoints/getTimetable";
-import getUnitSelections, { Filters, Selections } from "../endpoints/getUnitSelections";
-import type { Unit } from "../endpoints/getUnits";
-import getUnits from "../endpoints/getUnits";
-import type Host from "../hosts";
+import getRenderKey from "./api/endpoints/getRenderKey";
+import getTimetable, { Timetable } from "./api/endpoints/getTimetable";
+import getUnitSelections, { Filters, Selections } from "./api/endpoints/getUnitSelections";
+import type { Unit } from "./api/endpoints/getUnits";
+import getUnits from "./api/endpoints/getUnits";
+import type Host from "./api/hosts";
 
 
-class Session
+class Skola24
 {
     private currentHost: string;
     private currentSchoolGuid: string;
@@ -190,4 +190,4 @@ class Session
 
 }
 
-export default Session
+export default Skola24
