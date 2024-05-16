@@ -1,5 +1,5 @@
 import executeRequest from "../executeRequest";
-import type Host from "../hosts";
+import type Host from "../utils/hosts";
 import Endpoint from "./endpoint";
 
 export type Unit = { unitGuid: string, unitId: string }

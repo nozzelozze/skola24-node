@@ -1,6 +1,6 @@
 import executeRequest from "../executeRequest"
 import type { activeSchoolYears } from "../helperTypes"
-import type Host from "../hosts"
+import type Host from "../utils/hosts"
 import Endpoint from "./endpoint"
 
 const getActiveYears = async (hostName: Host, checkSchoolYearsFeatures: boolean = false) =>

@@ -6,7 +6,7 @@ import type { Unit } from "./api/endpoints/getUnits";
 import getUnits from "./api/endpoints/getUnits";
 import type SelectionType from "./api/endpoints/selectionTypes";
 import type { Dimensions, Timetable } from "./api/helperTypes";
-import type Host from "./api/hosts";
+import type Host from "./api/utils/hosts";
 import transformTimetable from "./api/transformTimetable";
 
 

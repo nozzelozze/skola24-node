@@ -1,6 +1,6 @@
 import executeRequest from "../executeRequest"
 import type { Dimensions, RawTimetable } from "../helperTypes"
-import type Host from "../hosts"
+import type Host from "../utils/hosts"
 import Endpoint from "./endpoint"
 import type SelectionType from "./selectionTypes"
 
