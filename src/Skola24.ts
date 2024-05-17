@@ -62,7 +62,7 @@ class Skola24
      * if (schools) // Kollar så att anropet lyckades
      * {
      *     console.log(schools[0].name) // Outputtar t.ex. 'Lars Kagg'
-     * }
+     * } n
      * ```
      */
     public async getSchools(): Promise<{ name: string, guid: string }[] | null>
