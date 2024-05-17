@@ -1,15 +1,7 @@
-import getActiveYears from "./api/endpoints/getActiveYears";
-import getRenderKey from "./api/endpoints/getRenderKey";
-import getTimetable from "./api/endpoints/getTimetable";
-import getUnitSelections, { Filters, Selections } from "./api/endpoints/getUnitSelections";
-import type { Unit } from "./api/endpoints/getUnits";
-import getUnits from "./api/endpoints/getUnits";
-import type SelectionType from "./api/endpoints/selectionTypes";
-import type { Dimensions, Timetable } from "./api/helperTypes";
+import type SelectionType from "./api/utils/selectionTypes";
 import type Host from "./api/utils/hosts";
-import transformTimetable from "./api/transformTimetable";
 
-
+// old
 class Skola24
 {
     private currentHost: Host
@@ -45,11 +37,11 @@ class Skola24
         //this.initialize()
     }
 
-    private async getSchoolYear()
+/*     private async getSchoolYear()
     {
         let result = await getActiveYears(this.currentHost)
         this.schoolYear = result.data[0].guid
-    }
+    } */
 
     /**
      * Gör ett API-anrop till Skola24 för att hämta skolor kopplade till `this.currentHost`
@@ -65,13 +57,13 @@ class Skola24
      * } n
      * ```
      */
-    public async getSchools(): Promise<{ name: string, guid: string }[] | null>
+/*     public async getSchools(): Promise<{ name: string, guid: string }[] | null>
     {
         let result = await getUnits(this.currentHost)
         if (!this.checkResult(result)) return
 
         return result.data.map((unit) => { return { guid: unit.unitGuid, name: unit.unitId } })
-    }
+    } */
 
     /**
      * Sätter sessionens aktuella skola genom att uppdatera `this.currentSchoolGuid`. Detta gör att schoolGuid inte behöver specifieras i andra metoder.
@@ -123,7 +115,7 @@ class Skola24
      * }
      * ```
      */
-    public async getSelections(filters: Filters, schoolGuid?: string): Promise<{ success: boolean, data: Selections }>
+/*     public async getSelections(filters: Filters, schoolGuid?: string): Promise<{ success: boolean, data: Selections }>
     {
         if (!schoolGuid && !this.currentSchoolGuid)
             return { success: false, data: null }
@@ -133,7 +125,7 @@ class Skola24
             return { success: false, data: null }
 
         return { success: true, data: result.data }
-    }
+    } */
 
     /**
      * Utför ett API-anrop för att hämta ett schemat baserat på en given urvalssträng och veckonummer.
@@ -173,7 +165,7 @@ class Skola24
      * }
      * ```
      */
-    public async getSchedule(selection: string, week: number, dimensions: Dimensions, selectionType: SelectionType, schoolGuid?: string): Promise<{ success: boolean, data: Timetable }>
+/*     public async getSchedule(selection: string, week: number, dimensions: Dimensions, selectionType: SelectionType, schoolGuid?: string): Promise<{ success: boolean, data: Timetable }>
     {
         if (!this.schoolYear)
             await this.getSchoolYear()
@@ -194,7 +186,7 @@ class Skola24
         const timetable = transformTimetable(result.data)
 
         return { success: true, data: timetable }
-    }
+    } */
 
 
     // Helper functions

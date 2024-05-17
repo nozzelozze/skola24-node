@@ -1,16 +1,39 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from "axios";
+import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 import getBaseRequestConfig from "./utils/baseRequestConfig";
-import { ApiRequest, BaseResponse, Request } from "./types/types";
+import { ApiRequest } from "./types/types";
+import { Request } from "./types/Request";
+import { BaseResponse, ResponseData } from "./types/Response";
 
 export default class Skola24Client
 {
 
-    public getActiveSchoolYears: ApiRequest<Request.getActiveSchoolYears, BaseResponse<any>>;
-    public getTimetableViewerUnits: ApiRequest<Request.getTimetableViewerUnits, BaseResponse<any>>;
-    public getTimetableRenderKey: ApiRequest<Request.getTimetableRenderKey, BaseResponse<any>>;
-    public getTimetableSelection: ApiRequest<Request.getTimetableSelection, BaseResponse<any>>
-    public getPersonalTimetables: ApiRequest<Request.getPersonalTimetables, BaseResponse<any>>
-    public renderTimetable: ApiRequest<Request.renderTimetable, BaseResponse<any>>
+    public getActiveSchoolYears: ApiRequest<
+        Request.getActiveSchoolYears,
+        BaseResponse<ResponseData.getActiveSchoolYears>
+    >
+        
+    public getTimetableViewerUnits: ApiRequest<
+        Request.getTimetableViewerUnits,
+        BaseResponse<ResponseData.getTimetableViewerUnits>
+    >
+        
+    public getTimetableRenderKey: ApiRequest<
+        Request.getTimetableRenderKey,
+        BaseResponse<ResponseData.getTimetableRenderKey>
+    >
+        
+    public getTimetableSelection: ApiRequest<
+        Request.getTimetableSelection,
+        BaseResponse<ResponseData.getTimetableSelection>
+    >
+    public getPersonalTimetables: ApiRequest<
+        Request.getPersonalTimetables,
+        BaseResponse<ResponseData.getPersonalTimetables>
+    >
+    public renderTimetable: ApiRequest<
+        Request.renderTimetable,
+        BaseResponse<ResponseData.renderTimetable>
+    >
 
     constructor()
     {
@@ -26,11 +49,11 @@ export default class Skola24Client
     {
         return async (data: D = {} as D, additionalRequestParams: object = {}) =>
         {
-            return client.executeApiRequest<R>(url, data, additionalRequestParams);
+            return client.executeApiRequest<R>(url, data, additionalRequestParams)
         }
     }
 
-    private async executeApiRequest<R>(url: string, data: object = {}, additionalRequestParams: object = {}): Promise<R>
+    private async executeApiRequest<R>(url: string, data: object = {}, additionalRequestParams: object = {}): Promise<AxiosResponse<R>>
     {
         const config: AxiosRequestConfig =
         {
