@@ -1,5 +1,5 @@
 {
-  "name": "skola24-api",
+  "name": "skola24-node",
   "version": "1.0.0",
   "description": "Npm package designed to simplify the process of fetching schedules from Skola24.",
   "main": "index.js",

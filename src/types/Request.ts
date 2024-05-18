@@ -1,28 +1,32 @@
 import Host from "../utils/hosts"
 import SelectionType from "../utils/selectionTypes"
+import { ExcludeClientManaged } from "./types"
 
-export module RequestData
+module RequestData
 {
-    export type getActiveSchoolYears =
+    export type _getActiveSchoolYears =
         {
             hostName: Host
-            checkSchoolYearsFeatures: boolean
+            checkSchoolYearsFeatures?: boolean
         }
+    export type getActiveSchoolYears = ExcludeClientManaged<_getActiveSchoolYears, "hostName">
 
-    export type servicesSkola24GetTimetableViewerUnits =
+    export type _getTimetableViewerUnits =
         {
             getTimetableViewerUnitsRequest:
             {
                 hostName: Host
             }
         }
+    export type getTimetableViewerUnits = ExcludeClientManaged<_getTimetableViewerUnits, "getTimetableViewerUnitsRequest">
 
-    export type getTimetableRenderKey =
+    export type _getTimetableRenderKey =
         {
 
         }
+    export type getTimetableRenderKey = ExcludeClientManaged<_getTimetableRenderKey, never>
 
-    export type getTimetableSelection =
+    export type _getTimetableSelection =
         {
             hostName: Host
             unitGuid: string
@@ -38,53 +42,38 @@ export module RequestData
                 teacher: boolean
             }
         }
+    export type getTimetableSelection = ExcludeClientManaged<_getTimetableSelection, "hostName">
 
-
-    export type servicesSkola24GetPersonalTimetables =
-        {
-            getPersonalTimetablesRequest:
-            {
-                hostName: Host
-            }
-        }
-
-    export type renderTimetable =
+    export type _renderTimetable =
         {
             renderKey: string
             host: Host
             unitGuid: string
             schoolYear: string
-            startDate: any
-            endDate: any
-            scheduleDay: number
-            blackAndWhite: boolean
+            startDate?: any
+            endDate?: any
+            scheduleDay?: number
+            blackAndWhite?: boolean
             width: number
             height: number
             selectionType: SelectionType
             selection: string
-            showHeader: boolean
-            periodText: string
+            showHeader?: boolean
+            periodText?: string
             week: number
             year: number
-            privateFreeTextMode: any
-            privateSelectionMode: boolean
-            customerKey: string
+            privateFreeTextMode?: any
+            privateSelectionMode?: boolean
+            customerKey?: string
         }
+    export type renderTimetable = ExcludeClientManaged<_renderTimetable, "host">
 
-    export type encryptSignature =
+    export type _encryptSignature =
         {
             signature: string
         }
-
-    export type getRolesForTimetableViewer =
-        {
-            hostName: Host
-        }
-
-    export type getUserInfo =
-        {
-
-        }
-
+    export type encryptSignature = ExcludeClientManaged<_encryptSignature, never>
 
 }
+
+export default RequestData

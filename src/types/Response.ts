@@ -9,7 +9,7 @@ export type BaseResponse<T> =
         needSessionRefresh: boolean
     }
 
-export module ResponseData
+module ResponseData
 {
 
     export type getActiveSchoolYears =
@@ -23,7 +23,7 @@ export module ResponseData
             useSchoolYearsFeatures: boolean
         }
 
-    export type servicesSkola24GetTimetableViewerUnits =
+    export type getTimetableViewerUnits =
         {
             errors: any
             validationErrors: any
@@ -102,25 +102,6 @@ export module ResponseData
         }
 
 
-    export type servicesSkola24GetPersonalTimetables =
-        {
-            errors: any
-            getPersonalTimetablesResponse: {
-                teacherTimetables: any
-                studentTimetables: {
-                    schoolGuid: string
-                    unitGuid: string
-                    schoolID: string
-                    timetableID: string
-                    personGuid: string
-                    firstName: string
-                    lastName: string
-                }[]
-                childrenTimetables: any
-            }
-        }
-
-
     export type renderTimetable =
         {
             textList: {
@@ -176,13 +157,7 @@ export module ResponseData
             signature: string
         }
 
-    export type getRolesForTimetableViewer =
-        {
-            userRolesPerSchool: any[]
-            isEmployee: boolean
-            isPrivate: boolean
-            defaultSelectedSchoolId: any
-        }
-
 
 }
+
+export default ResponseData
