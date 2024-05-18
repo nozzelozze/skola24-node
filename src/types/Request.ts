@@ -1,7 +1,7 @@
 import Host from "../utils/hosts"
 import SelectionType from "../utils/selectionTypes"
 
-export module Request
+export module RequestData
 {
     export type getActiveSchoolYears =
         {
@@ -9,7 +9,7 @@ export module Request
             checkSchoolYearsFeatures: boolean
         }
 
-    export type getTimetableViewerUnits =
+    export type servicesSkola24GetTimetableViewerUnits =
         {
             getTimetableViewerUnitsRequest:
             {
@@ -40,7 +40,7 @@ export module Request
         }
 
 
-    export type getPersonalTimetables =
+    export type servicesSkola24GetPersonalTimetables =
         {
             getPersonalTimetablesRequest:
             {
@@ -70,5 +70,21 @@ export module Request
             privateSelectionMode: boolean
             customerKey: string
         }
+
+    export type encryptSignature =
+        {
+            signature: string
+        }
+
+    export type getRolesForTimetableViewer =
+        {
+            hostName: Host
+        }
+
+    export type getUserInfo =
+        {
+
+        }
+
 
 }

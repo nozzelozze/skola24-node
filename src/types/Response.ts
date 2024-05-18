@@ -23,7 +23,7 @@ export module ResponseData
             useSchoolYearsFeatures: boolean
         }
 
-    export type getTimetableViewerUnits =
+    export type servicesSkola24GetTimetableViewerUnits =
         {
             errors: any
             validationErrors: any
@@ -102,7 +102,7 @@ export module ResponseData
         }
 
 
-    export type getPersonalTimetables =
+    export type servicesSkola24GetPersonalTimetables =
         {
             errors: any
             getPersonalTimetablesResponse: {
@@ -170,5 +170,19 @@ export module ResponseData
                 lastPublished: string
             }[]
         }
+
+    export type encryptSignature =
+        {
+            signature: string
+        }
+
+    export type getRolesForTimetableViewer =
+        {
+            userRolesPerSchool: any[]
+            isEmployee: boolean
+            isPrivate: boolean
+            defaultSelectedSchoolId: any
+        }
+
 
 }
