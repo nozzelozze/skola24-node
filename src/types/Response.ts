@@ -56,8 +56,18 @@ module ResponseData
     export type getTimetableSelection =
         {
             courses: any[]
-            subjects: any[]
-            periods: any[]
+            subjects: {
+                id: string
+                name: string
+                eid: string
+                selectableBy: any
+              }[]
+            periods: {
+                name: string
+                id: string
+                from: string
+                to: string
+              }[]
             groups: {
                 id: any
                 groupGuid: string
@@ -97,7 +107,19 @@ module ResponseData
                 external: boolean
                 selectableBy: any
             }[]
-            teachers: any[]
+            teachers: {
+                name: any
+                firstName: string
+                lastName: string
+                fullName: string
+                isActiveUser: boolean
+                integrity: boolean
+                id: string
+                reported: boolean
+                personGuid: string
+                readOnly: boolean
+                selectableBy: any
+              }[]
             students: any[]
         }
 
@@ -138,6 +160,7 @@ module ResponseData
                 parentId: number
                 type: string
             }[]
+            
             lessonInfo: {
                 guidId: string
                 texts: string[]

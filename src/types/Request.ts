@@ -1,5 +1,5 @@
 import Host from "../utils/hosts"
-import SelectionType from "../utils/selectionTypes"
+import { ScheduleDay, SelectionType } from "../utils/helperEnums"
 import { ExcludeClientManaged } from "./types"
 
 module RequestData
@@ -32,14 +32,14 @@ module RequestData
             unitGuid: string
             filters:
             {
-                class: boolean
-                course: boolean
-                group: boolean
-                period: boolean
-                room: boolean
-                student: boolean
-                subject: boolean
-                teacher: boolean
+                class?: boolean
+                course?: boolean
+                group?: boolean
+                period?: boolean
+                room?: boolean
+                student?: boolean
+                subject?: boolean
+                teacher?: boolean
             }
         }
     export type getTimetableSelection = ExcludeClientManaged<_getTimetableSelection, "hostName">
@@ -52,7 +52,7 @@ module RequestData
             schoolYear: string
             startDate?: any
             endDate?: any
-            scheduleDay?: number
+            scheduleDay?: ScheduleDay
             blackAndWhite?: boolean
             width: number
             height: number
