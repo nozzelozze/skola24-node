@@ -16,6 +16,7 @@ class Timetable
     constructor(createApiRequest: CreateApiRequest, client: Skola24Client, supplyOwnRenderKey: boolean, supplyOwnSchoolYear: boolean)
     {
         this.SupplyOwnRenderKey = supplyOwnRenderKey
+        this.SupplyOwnSchoolYear = supplyOwnSchoolYear
         this.client = client
         this._getTimetableRenderKey = createApiRequest("/get/timetable/render/key")
         this._getTimetableSelection = createApiRequest("/get/timetable/selection")
