@@ -1,7 +1,3 @@
-# skola24-api
+# Skola24 Node API Library
  
-Npm package designed to simplify the process of fetching schedules from Skola24.
-
-## TODO:
-
-
+This library provides convenient access to the quite perplexing Skola24 API from TypeScript or JavaScript.
