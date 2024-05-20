@@ -1,6 +1,6 @@
 import Host from "../utils/hosts"
 import { ScheduleDay, SelectionType } from "../utils/helperEnums"
-import { ExcludeClientManaged } from "./types"
+import { ExcludeClientManaged, OptionallyClientManaged } from "./utilTypes"
 
 module RequestData
 {
@@ -42,11 +42,11 @@ module RequestData
                 teacher?: boolean
             }
         }
-    export type getTimetableSelection = ExcludeClientManaged<_getTimetableSelection, "hostName">
+    export type getTimetableSelection = OptionallyClientManaged<ExcludeClientManaged<_getTimetableSelection, "hostName">, "unitGuid">
 
     export type _renderTimetable =
         {
-            renderKey: string
+            renderKey?: string
             host: Host
             unitGuid: string
             schoolYear: string
@@ -66,7 +66,7 @@ module RequestData
             privateSelectionMode?: boolean
             customerKey?: string
         }
-    export type renderTimetable = ExcludeClientManaged<_renderTimetable, "host">
+    export type renderTimetable = OptionallyClientManaged<ExcludeClientManaged<_renderTimetable, "host">, "unitGuid" | "schoolYear">
 
     export type _encryptSignature =
         {

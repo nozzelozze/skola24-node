@@ -1,14 +1,4 @@
 
-export type BaseResponse<T> =
-    {
-        error: any,
-        data: T,
-        exception: any,
-        validation: any[],
-        sessionExpires: Date,
-        needSessionRefresh: boolean
-    }
-
 module ResponseData
 {
 
@@ -23,10 +13,15 @@ module ResponseData
             useSchoolYearsFeatures: boolean
         }
 
+    export type getTimetableViewerUnitsValidationErrors =
+        {
+            id: number,
+            description: string
+        }[]
     export type getTimetableViewerUnits =
         {
             errors: any
-            validationErrors: any
+            validationErrors: getTimetableViewerUnitsValidationErrors
             getTimetableViewerUnitsResponse: {
                 hostName: string
                 units: {
@@ -61,13 +56,13 @@ module ResponseData
                 name: string
                 eid: string
                 selectableBy: any
-              }[]
+            }[]
             periods: {
                 name: string
                 id: string
                 from: string
                 to: string
-              }[]
+            }[]
             groups: {
                 id: any
                 groupGuid: string
@@ -119,7 +114,7 @@ module ResponseData
                 personGuid: string
                 readOnly: boolean
                 selectableBy: any
-              }[]
+            }[]
             students: any[]
         }
 
@@ -160,7 +155,7 @@ module ResponseData
                 parentId: number
                 type: string
             }[]
-            
+
             lessonInfo: {
                 guidId: string
                 texts: string[]
