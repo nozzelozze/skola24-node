@@ -1,9 +1,15 @@
 import Skola24Client from "../Skola24Client"
 import RequestData from "../types/Request"
 import ResponseData from "../types/Response"
-import { ApiRequest, CreateApiRequest } from "../types/utilTypes"
+import { AdditionalAxiosRequestConfig, ApiRequest, CreateApiRequest } from "../types/utilTypes"
 
-class Utilities
+interface IUtilities
+{
+    getActiveSchoolYears: ApiRequest<RequestData.getActiveSchoolYears, ResponseData.getActiveSchoolYears>
+    encryptSignature: ApiRequest<RequestData.encryptSignature, ResponseData.encryptSignature>
+}
+
+class Utilities implements IUtilities
 {
     private client: Skola24Client
 
@@ -16,13 +22,30 @@ class Utilities
         this._getActiveSchoolYears = createApiRequest("/get/active/school/years")
         this._encryptSignature = createApiRequest("/encrypt/signature")
     }
-
-    public getActiveSchoolYears: ApiRequest<RequestData.getActiveSchoolYears, ResponseData.getActiveSchoolYears> = (data, additionalConfig) =>
+    /**
+     * Retrieves active school years.
+     * 
+     * @param {RequestData.getActiveSchoolYears} data - The request data.
+     * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings.
+     * @throws Will throw an error if no active school years are found.
+     */
+    public getActiveSchoolYears = async (data: RequestData.getActiveSchoolYears, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
-        return this._getActiveSchoolYears({ hostName: this.client.HostName, ...data }, additionalConfig)
+        const response = await this._getActiveSchoolYears({ hostName: this.client.Config.Host, ...data }, additionalConfig)
+        if (response.activeSchoolYears.length <= 0)
+        {
+            throw new Error(`No school years. Response: \n\n${response}`)
+        }
+        return response
     }
 
-    public encryptSignature: ApiRequest<RequestData.encryptSignature, ResponseData.encryptSignature> = (data, additionalConfig) =>
+    /**
+     * Encrypts an ID or signature and returns a string that should be used as a selection when fetching timetables.
+     * 
+     * @param {RequestData.encryptSignature} data - The request data.
+     * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings.
+     */
+    public encryptSignature = async (data: RequestData.encryptSignature, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
         return this._encryptSignature({ ...data }, additionalConfig)
     }

@@ -1,9 +1,14 @@
 import Skola24Client from "../Skola24Client"
 import RequestData from "../types/Request"
 import ResponseData from "../types/Response"
-import { ApiRequest, CreateApiRequest } from "../types/utilTypes"
+import { AdditionalAxiosRequestConfig, ApiRequest, CreateApiRequest } from "../types/utilTypes"
 
-class Services
+interface IServices
+{
+    getTimetableViewerUnits: ApiRequest<RequestData.getTimetableViewerUnits, ResponseData.getTimetableViewerUnits>
+}
+
+class Services implements IServices
 {
     private client: Skola24Client
 
@@ -15,9 +20,15 @@ class Services
         this._getTimetableViewerUnits = createApiRequest("/services/skola24/get/timetable/viewer/units")
     }
 
-    public getTimetableViewerUnits: ApiRequest<RequestData.getTimetableViewerUnits, ResponseData.getTimetableViewerUnits> = (data, additionalConfig) =>
+    /**
+     * Retrieves the host's units, which in most cases are schools.
+     * 
+     * @param {RequestData.getTimetableViewerUnits} data - The request data.
+     * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings.
+     */
+    public getTimetableViewerUnits = (data: RequestData.getTimetableViewerUnits, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
-        return this._getTimetableViewerUnits({ getTimetableViewerUnitsRequest: { hostName: this.client.HostName } }, additionalConfig)
+        return this._getTimetableViewerUnits({ getTimetableViewerUnitsRequest: { hostName: this.client.Config.Host } }, additionalConfig)
     }
 }
 

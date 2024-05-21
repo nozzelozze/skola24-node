@@ -1,83 +1,105 @@
 import Skola24Client from "../Skola24Client"
 import RequestData from "../types/Request"
 import ResponseData from "../types/Response"
-import { ApiRequest, CreateApiRequest } from "../types/utilTypes"
+import { AdditionalAxiosRequestConfig, ApiRequest, CreateApiRequest } from "../types/utilTypes"
 
-class Timetable
+interface ITimetable
+{
+    getTimetableRenderKey: ApiRequest<RequestData.getTimetableRenderKey, ResponseData.getTimetableRenderKey>
+    getTimetableSelection: ApiRequest<RequestData.getTimetableSelection, ResponseData.getTimetableSelection>
+    renderTimetable: ApiRequest<RequestData.renderTimetable, ResponseData.renderTimetable>
+}
+
+class Timetable implements ITimetable
 {
     private client: Skola24Client
-    private SupplyOwnRenderKey: boolean
-    private SupplyOwnSchoolYear: boolean
 
     private _getTimetableRenderKey: ApiRequest<RequestData._getTimetableRenderKey, ResponseData.getTimetableRenderKey>
     private _getTimetableSelection: ApiRequest<RequestData._getTimetableSelection, ResponseData.getTimetableSelection>
     private _renderTimetable: ApiRequest<RequestData._renderTimetable, ResponseData.renderTimetable>
 
-    constructor(createApiRequest: CreateApiRequest, client: Skola24Client, supplyOwnRenderKey: boolean, supplyOwnSchoolYear: boolean)
+    constructor(createApiRequest: CreateApiRequest, client: Skola24Client)
     {
-        this.SupplyOwnRenderKey = supplyOwnRenderKey
-        this.SupplyOwnSchoolYear = supplyOwnSchoolYear
         this.client = client
         this._getTimetableRenderKey = createApiRequest("/get/timetable/render/key")
         this._getTimetableSelection = createApiRequest("/get/timetable/selection")
         this._renderTimetable = createApiRequest("/render/timetable")
     }
 
-    private missing = (param: string) => `${param} is required but missing. Please provide a valid ${param} either in the 'data' parameter or ensure the client has a ${param} configured.`
+    private missing = (param: string) => `${param} is required but missing. Please provide a valid ${param} either in the 'data' parameter or ensure the client's config has a ${param} configured.`
 
     private addUnitGuid(data: any): any
     {
-        if (this.client.UnitGuid == null && data.unitGuid == null)
+        if (this.client.Config.UnitGuid == null && data.unitGuid == null)
         {
             throw new Error(this.missing("UnitGuid"))
         }
-        return { ...data, unitGuid: data.unitGuid || this.client.UnitGuid }
+        return { ...data, unitGuid: data.unitGuid || this.client.Config.UnitGuid }
     }
 
     private async addSchoolYear(data: any): Promise<any>
     {
-        if (!this.SupplyOwnSchoolYear && !this.client.SchoolYear)
+        if (!this.client.Config.SupplyOwnSchoolYear && !this.client.Config.SchoolYear)
         {
             const schoolYearResponse = await this.client.Utilities.getActiveSchoolYears({})
-            this.client.SchoolYear = schoolYearResponse.activeSchoolYears[0].guid
+            this.client.Config.SchoolYear = schoolYearResponse.activeSchoolYears[0].guid
         }
-        if (this.client.SchoolYear == null && data.schoolYear == null)
+        if (this.client.Config.SchoolYear == null && data.schoolYear == null)
         {
             throw new Error(this.missing("SchoolYear"))
         }
-        return { ...data, schoolYear: data.schoolYear || this.client.SchoolYear }
+        return { ...data, schoolYear: data.schoolYear || this.client.Config.SchoolYear }
     }
 
     private async addRenderKey(data: any): Promise<any>
     {
-        if (this.SupplyOwnRenderKey && !data.renderKey)
+        if (this.client.Config.SupplyOwnRenderKey && !data.renderKey)
         {
             throw new Error(this.missing("RenderKey"))
         }
         let clientSuppliedKey: string
-        if (!this.SupplyOwnRenderKey)
+        if (!this.client.Config.SupplyOwnRenderKey)
         {
-            const renderKeyResponse = await this.getTimetableRenderKey({})
+            const renderKeyResponse = await this.getTimetableRenderKey({}, {})
             clientSuppliedKey = renderKeyResponse.key
         }
         return { ...data, renderKey: data.renderKey || clientSuppliedKey }
     }
 
-    public getTimetableRenderKey: ApiRequest<RequestData.getTimetableRenderKey, ResponseData.getTimetableRenderKey> = (data, additionalConfig) =>
+    /**
+     * Retrieves a render key.
+     * 
+     * @param {RequestData.getTimetableRenderKey} data - An empty type. Always leave as `{}`
+     * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings.
+     */
+    public getTimetableRenderKey = async (data: RequestData.getTimetableRenderKey, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
         return this._getTimetableRenderKey({ ...data }, additionalConfig)
     }
 
-    public getTimetableSelection: ApiRequest<RequestData.getTimetableSelection, ResponseData.getTimetableSelection> = (data, additionalConfig) =>
+    /**
+     * Fetches selected timetable elements from the host based on the provided data, such as classes, teachers, rooms, and more.
+     * 
+     * @param {RequestData.getTimetableSelection} data - Filters for timetable selections.
+     * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings. 
+     * @returns 
+     */
+    public getTimetableSelection = async (data: RequestData.getTimetableSelection, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
         const requestData = this.addUnitGuid(data)
-        return this._getTimetableSelection({ hostName: this.client.HostName, ...requestData }, additionalConfig)
+        return this._getTimetableSelection({ hostName: this.client.Config.Host, ...requestData }, additionalConfig)
     }
 
-    public renderTimetable: ApiRequest<RequestData.renderTimetable, ResponseData.renderTimetable> = async (data, additionalConfig) =>
+    /**
+     * Retrieves a timetable.
+     * 
+     * @param {RequestData.renderTimetable} data - Required information such as week and selection.
+     * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings. 
+     */
+    public renderTimetable = async (data: RequestData.renderTimetable, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
         const requestData = await this.addRenderKey(this.addUnitGuid(await this.addSchoolYear(data)))
-        return this._renderTimetable({ host: this.client.HostName, ...requestData }, additionalConfig)
+        return this._renderTimetable({ host: this.client.Config.Host, ...requestData }, additionalConfig)
     }
 }
 

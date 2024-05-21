@@ -155,7 +155,6 @@ module ResponseData
                 parentId: number
                 type: string
             }[]
-
             lessonInfo: {
                 guidId: string
                 texts: string[]
