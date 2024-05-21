@@ -54,8 +54,8 @@ module RequestData
             endDate?: any
             scheduleDay?: ScheduleDay
             blackAndWhite?: boolean
-            width: number
-            height: number
+            width?: number
+            height?: number
             selectionType: SelectionType
             selection: string
             showHeader?: boolean
@@ -66,7 +66,7 @@ module RequestData
             privateSelectionMode?: boolean
             customerKey?: string
         }
-    export type renderTimetable = OptionallyClientManaged<ExcludeClientManaged<_renderTimetable, "host">, "unitGuid" | "schoolYear">
+    export type renderTimetable = OptionallyClientManaged<ExcludeClientManaged<_renderTimetable, "host">, "unitGuid" | "schoolYear" | "width" | "height">
 
     export type _encryptSignature =
         {

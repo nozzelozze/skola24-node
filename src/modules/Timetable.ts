@@ -82,7 +82,6 @@ class Timetable implements ITimetable
      * 
      * @param {RequestData.getTimetableSelection} data - Filters for timetable selections.
      * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings. 
-     * @returns 
      */
     public getTimetableSelection = async (data: RequestData.getTimetableSelection, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
@@ -98,7 +97,10 @@ class Timetable implements ITimetable
      */
     public renderTimetable = async (data: RequestData.renderTimetable, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
+        data.height = data.height ?? 500
+        data.width = data.width ?? 500
         const requestData = await this.addRenderKey(this.addUnitGuid(await this.addSchoolYear(data)))
+
         return this._renderTimetable({ host: this.client.Config.Host, ...requestData }, additionalConfig)
     }
 }

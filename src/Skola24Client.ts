@@ -93,16 +93,16 @@ class Skola24Client
         }
         if (response.data.validation?.length > 0)
         {
-            throw new Skola24Errors.ValidationError(response.data.validation)
+            throw new Skola24Errors.ValidationError(response.data.validation, data, url)
         }
         if (response.data.exception != null)
         {
-            throw new Skola24Errors.ExceptionError(response.data.exception)
+            throw new Skola24Errors.ExceptionError(response.data.exception, data, url)
         }
         const validationErrors = (response.data.data as ResponseData.getTimetableViewerUnits).validationErrors
         if (validationErrors)
         {
-            throw new Skola24Errors.GetTimetableViewerUnitsValidationErrorsError(validationErrors)
+            throw new Skola24Errors.GetTimetableViewerUnitsValidationErrorsError(validationErrors, data, url)
         }
 
         return response.data.data

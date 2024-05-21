@@ -18,29 +18,31 @@ module ResponseData
             id: number,
             description: string
         }[]
+    export type getTimetableViewerUnitsResponse =
+        {
+            hostName: string
+            units: {
+                unitGuid: string
+                unitId: string
+                allowCalendarExport: boolean
+                private: any
+                staff: any
+                anonymous: {
+                    students: boolean
+                    classes: boolean
+                    groups: boolean
+                    teachers: boolean
+                    rooms: boolean
+                    subjects: boolean
+                    courses: boolean
+                }
+            }[]
+        }
     export type getTimetableViewerUnits =
         {
             errors: any
             validationErrors: getTimetableViewerUnitsValidationErrors
-            getTimetableViewerUnitsResponse: {
-                hostName: string
-                units: {
-                    unitGuid: string
-                    unitId: string
-                    allowCalendarExport: boolean
-                    private: any
-                    staff: any
-                    anonymous: {
-                        students: boolean
-                        classes: boolean
-                        groups: boolean
-                        teachers: boolean
-                        rooms: boolean
-                        subjects: boolean
-                        courses: boolean
-                    }
-                }[]
-            }
+            getTimetableViewerUnitsResponse: getTimetableViewerUnitsResponse
         }
 
     export type getTimetableRenderKey =

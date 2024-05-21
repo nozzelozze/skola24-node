@@ -5,7 +5,7 @@ import { AdditionalAxiosRequestConfig, ApiRequest, CreateApiRequest } from "../t
 
 interface IServices
 {
-    getTimetableViewerUnits: ApiRequest<RequestData.getTimetableViewerUnits, ResponseData.getTimetableViewerUnits>
+    getTimetableViewerUnits: ApiRequest<RequestData.getTimetableViewerUnits, ResponseData.getTimetableViewerUnitsResponse>
 }
 
 class Services implements IServices
@@ -26,9 +26,10 @@ class Services implements IServices
      * @param {RequestData.getTimetableViewerUnits} data - The request data.
      * @param {AdditionalAxiosRequestConfig?} additionalConfig - Additional Axios configuration settings.
      */
-    public getTimetableViewerUnits = (data: RequestData.getTimetableViewerUnits, additionalConfig?: AdditionalAxiosRequestConfig) =>
+    public getTimetableViewerUnits = async (data: RequestData.getTimetableViewerUnits, additionalConfig?: AdditionalAxiosRequestConfig) =>
     {
-        return this._getTimetableViewerUnits({ getTimetableViewerUnitsRequest: { hostName: this.client.Config.Host } }, additionalConfig)
+        const response = await this._getTimetableViewerUnits({ getTimetableViewerUnitsRequest: { hostName: this.client.Config.Host } }, additionalConfig)
+        return response.getTimetableViewerUnitsResponse
     }
 }
 
