@@ -10,7 +10,7 @@ const batchCollectTimetables = async () =>
 
     const unitsResponse = await client.Services.getTimetableViewerUnits({})
 
-    let startTimes: { startTime: string, endTime: string }[] = []
+    let times: { startTime: string, endTime: string }[] = []
 
     for (const unit of unitsResponse.units)
     {
@@ -26,7 +26,7 @@ const batchCollectTimetables = async () =>
                     year: new Date().getFullYear(),
                     unitGuid: unit.unitGuid
                 })
-                timetable.lessonInfo.forEach(l => startTimes.push({ startTime: l.timeStart, endTime: l.timeEnd }))
+                timetable.lessonInfo.forEach(l => times.push({ startTime: l.timeStart, endTime: l.timeEnd }))
             }
         } catch (e)
         {
@@ -35,7 +35,7 @@ const batchCollectTimetables = async () =>
     }
 
     console.log(`Lesson end and start times for ${host}`)
-    startTimes.forEach(t =>
+    times.forEach(t =>
     {
         console.log(`${t.startTime} - ${t.endTime}`)
     })
