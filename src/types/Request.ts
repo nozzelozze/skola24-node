@@ -2,7 +2,7 @@ import Host from "../utils/hosts"
 import { ScheduleDay, SelectionType } from "../utils/helperEnums"
 import { ExcludeClientManaged, OptionallyClientManaged } from "./utilTypes"
 
-module RequestData
+export module RequestData
 {
     export type _getActiveSchoolYears =
         {

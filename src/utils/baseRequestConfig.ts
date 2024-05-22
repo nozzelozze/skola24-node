@@ -1,4 +1,3 @@
-import { AxiosRequestConfig } from "axios";
 import { BaseAxiosRequestConfig } from "../types/utilTypes";
 
 export default function getBaseRequestConfig (): BaseAxiosRequestConfig 

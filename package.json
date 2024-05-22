@@ -8,10 +8,15 @@
     "dist"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "rimraf dist && tsc"
   },
-  "keywords": [ ],
+  "keywords": [
+    "skola24",
+    "school",
+    "api",
+    "client",
+    "schedule"
+  ],
   "license": "ISC",
   "dependencies": {
     "axios": "^1.6.8"
@@ -24,5 +29,8 @@
   "bugs": {
     "url": "https://github.com/nozzelozze/skola24-node/issues"
   },
-  "homepage": "https://github.com/nozzelozze/skola24-node#readme"
+  "homepage": "https://github.com/nozzelozze/skola24-node#readme",
+  "devDependencies": {
+    "rimraf": "^5.0.7"
+  }
 }
