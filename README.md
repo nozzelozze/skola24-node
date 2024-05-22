@@ -2,7 +2,7 @@
  
 This library provides convenient access to the otherwise quite perplexing Skola24 API from TypeScript or JavaScript.
 
-[View Examples](https://github.com/nozzelozze/skola24-node/tree/main/src/examples)
+[View Examples](https://github.com/nozzelozze/skola24-node/tree/main/examples)
 
 ## Developer
 
