@@ -1,6 +1,6 @@
 {
   "name": "skola24-node",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Library that provides convenient access to the Skola24 API.",
   "exports": "./dist/main.js",
   "main": "./dist/main.js",
