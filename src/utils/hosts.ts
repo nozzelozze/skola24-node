@@ -1,5 +1,5 @@
 
-type Host = 
+export type Host = 
     "4ansgymnasium.skola24.se" |
     "abf.skola24.se" |
     "abfsthlm.skola24.se" |

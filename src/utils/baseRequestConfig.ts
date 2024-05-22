@@ -1,6 +1,6 @@
 import { BaseAxiosRequestConfig } from "../types/utilTypes";
 
-export default function getBaseRequestConfig (): BaseAxiosRequestConfig 
+export function getBaseRequestConfig (): BaseAxiosRequestConfig 
 {
     let config: BaseAxiosRequestConfig  = {
         method: "POST", // Skola24 always requires POST ( what the fuck? )
@@ -13,3 +13,5 @@ export default function getBaseRequestConfig (): BaseAxiosRequestConfig
 
     return config;
 }
+
+export default getBaseRequestConfig

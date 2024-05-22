@@ -1,5 +1,5 @@
 import { Skola24Client } from "../Skola24Client"
-import RequestData from "../types/Request"
+import RequestData, {} from "../types/Request"
 import ResponseData from "../types/Response"
 import { AdditionalAxiosRequestConfig, ApiRequest, CreateApiRequest } from "../types/utilTypes"
 
