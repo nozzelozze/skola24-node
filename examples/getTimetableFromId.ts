@@ -1,6 +1,6 @@
-import Skola24Client from "../Skola24Client"
-import { SelectionType } from "../utils/helperEnums"
-import Host from "../utils/hosts"
+import { Skola24Client } from "../src/Skola24Client"
+import { SelectionType } from "../src/utils/helperEnums"
+import Host from "../src/utils/hosts"
 
 const getTimetableFromId = async () =>
 {

@@ -17,6 +17,10 @@ module Skola24Errors
             super(message)
             this.request = request
             this.url = url
+            if (Error.captureStackTrace)
+            {
+                Error.captureStackTrace(this, BaseError)
+            }
         }
     }
 

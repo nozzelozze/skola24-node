@@ -1,4 +1,4 @@
-import Skola24Errors from "../error/Errors"
+import Skola24Errors from "../src/error/Errors"
 
 
 const handlingErrors = async () =>

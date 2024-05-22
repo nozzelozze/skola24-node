@@ -51,7 +51,7 @@ interface Skola24Config {
     SupplyOwnSchoolYear?: boolean;
 }
 
-class Skola24Client
+export class Skola24Client
 {
     public Config: Skola24Config
 
@@ -117,4 +117,3 @@ class Skola24Client
     }
 }
 
-export default Skola24Client
