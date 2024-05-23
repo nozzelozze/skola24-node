@@ -1,8 +1,16 @@
 # Skola24 Node API Library
- 
+
+[![NPM version](https://img.shields.io/npm/v/skola24-node.svg)](https://npmjs.org/package/skola24-node) 
+
 This library provides convenient access to the otherwise quite perplexing Skola24 API from TypeScript or JavaScript.
 
 [View Examples](https://github.com/nozzelozze/skola24-node/tree/main/examples)
+
+## Installation
+
+```sh
+npm install skola24-node
+```
 
 ## Developer
 
